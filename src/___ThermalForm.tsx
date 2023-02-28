@@ -29,7 +29,7 @@ const ThermalForm:React.FC<IThermalFormProps> = (props) => {
                     //   if (!response.data) return response;
                 }}
 
-                initialValues={InitValues}
+                initialValues={{tankSpecificHeatCapacity:props.sharedState.someState}}
                 decorators={[
                     createDecorator(
                         {
