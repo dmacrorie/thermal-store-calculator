@@ -7,7 +7,6 @@ interface HeatingTypeMenu {
   setSelectHeatingType: any 
 }
 
-
 const HeatingTypeMenu: React.FC<HeatingTypeMenu> = ( {selectHeatingType, setSelectHeatingType}): JSX.Element => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   
@@ -18,7 +17,6 @@ const HeatingTypeMenu: React.FC<HeatingTypeMenu> = ( {selectHeatingType, setSele
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
   };
-
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {

@@ -45,6 +45,8 @@ const InitValues: IThermalForm = {
     thermalStorageVsHeatPumpPeakRate: 0,
     thermalStoragePotentialWastedExpense: 0,
     thermalStorageHighTempRateCost: 0,
+
+    heatingType: "0",
 }
 
 export default InitValues;

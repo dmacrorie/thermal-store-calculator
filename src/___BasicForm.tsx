@@ -87,7 +87,7 @@ const BasicForm:React.FC<IBasicFormProps> = (props) => {
                             <Grid item xs={6} sm={3} md={3}>
                                 {values.timeEnergyLostFinalfterN !== undefined && <Chart labels={[`Stored kWh Available`, `kWh lost over ${values.timeShiftHoursN} hours`]} data={[values.tankEnergyAfterNHoursCooling.toFixed(1), values.timeEnergyLostFinalfterN.toFixed(1)]} />}
                                 {values.thermalStorageVsHeatPumpFlatRate !== undefined && values.heatPumpCostFlatRate && <Chart labels={['Heat pump £/day@flat rate)', 'Time-shifted direct £/day@low Rate']} data={[values.heatPumpCostFlatRate.toFixed(2), values.thermalStorageDailyCost.toFixed(2)]} />}
-                                <ThermalStorageFields />
+                                
                             </Grid>
                         </Grid>
                     </form>

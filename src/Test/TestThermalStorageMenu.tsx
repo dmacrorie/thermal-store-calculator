@@ -1,101 +1,128 @@
-import { useState } from 'react'
-import { Field, FormSpy } from 'react-final-form'
-import BasicContainerThing from '../util/basicContainer';
+import { Field } from "react-final-form";
+import BasicContainerThing from "../util/basicContainer";
+import { OnChange } from "react-final-form-listeners";
+import { ISharedState } from "../App";
 
-const TestThermalStorageMenu = () => {
+export interface ITestHouseFormProps {
+  setSomeSharedState(field: keyof ISharedState, val: number): void;
+  values: any;
+}
 
-    const [radioValue, setRadioValue] = useState(0);
+interface IConditionProps {
+  when: string;
+  is: any;
+  children: React.ReactNode;
+}
 
-    const onChange = (e: any) => {
-        setRadioValue(e.target.value);
-    };
+const Condition: React.FC<IConditionProps> = ({ when, is, children }) => (
+  <Field name={when} subscription={{ value: true }}>
+    {({ input: { value } }) => (value === is ? children : null)}
+  </Field>
+);
 
-    const toggle: any = (radioValue)
+const TestThermalStorageMenu: React.FC<ITestHouseFormProps> = ({
+  setSomeSharedState,
+  values,
+}: ITestHouseFormProps) => {
 
-    const input1 = (toggle === "3")
-    const input2 = (toggle === "4")
-    const input3 = (toggle === "2")
+  const handleThermalStorageChange = (value: string) => {
+    if (value !== "3") {
+      values.numberValue3 = "";
+    }
+    if (value !== "4") {
+      values.numberValue4 = "";
+    }
+  };
 
-    return (
+  return (
+    <>
+      <BasicContainerThing title="Thermal store parameters:">
+        <div>
+          <label>
+            <Field
+              name="thermalStorage"
+              component="input"
+              type="radio"
+              value="1"
+            />
+            Water cylinder based high temperature Thermal Storage (size
+            calculated for you)
+          </label>
+          <br></br>
 
-        <FormSpy
-            subscription={{
-                values: true,
-            }}
-        >
-            {({ values }) => (<BasicContainerThing title="Thermal store parameters:">
+          <label>
+            <Field
+              name="thermalStorage"
+              component="input"
+              type="radio"
+              value="2"
+            />
+            Water cylinder - standard maximum temperature limiter (size is
+            calculated for you)
+          </label>
+          <br></br>
 
-                <form >
-                    <label>
-                        <Field
-                            type="radio"
-                            component="input"
-                            value="1000"
-                            name="radioBtn"
-                            onChange={onChange}
-                        />{" "}
-                        Water cylinder based high temperature Thermal Storage (size calculated for you)
-                    </label><br />
-                    <label>
-                        <input
-                            type="radio"
-                            value="2000"
-                            name="radioBtn"
-                            onChange={onChange}
-                        />{" "}
-                        Water cylinder - standard maximum temperature limiter (size is calculated for you)
-                    </label><br />
+          <label>
+            <Field
+              name="thermalStorage"
+              component="input"
+              type="radio"
+              value="3"
+            />
+            Please enter the size of your water cylinder (litres):{" "}
+          </label>
+          <Condition when="thermalStorage" is="3">
+            <Field
+              name="numberValue3"
+              component="input"
+              type="text"
+              placeholer="3"
+            />
+            <OnChange name="numberValue3">
+              {(value: string, previous: string) => {
+                setSomeSharedState("tankMassState", values.numberValue3);
+              }}
+            </OnChange>
+          </Condition>
+          <br></br>
 
+          <label>
+            <Field
+              name="thermalStorage"
+              component="input"
+              type="radio"
+              value="4"
+            />
+            Please enter your thermal storage capacity (kWh):{" "}
+          </label>
+          <Condition when="thermalStorage" is="4">
+            <Field name="numberValue4" component="input" type="text" />
+            <OnChange name="numberValue4">
+              {(value: string, previous: string) => {
+                setSomeSharedState("thermalStorageState", values.numberValue4);
+              }}
+            </OnChange>
+          </Condition>
+        </div>
 
-
-                    <div>
-                        <input
-                            name="radioBtn"
-                            type="radio"
-                            value={3}
-                            onChange={onChange}
-
-                        />
-                        <label>{" "}Please enter the size of your water cylinder (litres) </label>{" "}
-                        <>
-                            {input1 && <>
-
-                                <Field
-                                    name="numberValueInputtedOne"
-                                    component="input"
-                                    type="text"
-                                />
-                            </>}
-                        </>
-                    </div>
-
-
-
-                    <div>
-                        <input
-                            name="radioBtn"
-                            type="radio"
-                            value={4}
-                            onChange={onChange}
-                        />
-                        <label>{" "}Please enter your thermal storage capacity (kWh)</label>{" "}
-
-                        {input2 && <>
-
-                            <Field
-                                name="numberValueInputtedTwo"
-                                component="input"
-                                type="text"
-                            />
-                        </>}
-                    </div>
-                    <pre>{JSON.stringify(values.numberValueInputtedOne)}</pre>
-                </form>
-
-            </BasicContainerThing>)
+        <OnChange name="thermalStorage">
+          {(value: string, previous: string) => {
+            // let ThermalStorageValue = 0;
+            // if (values.thermalStorage < 3) {
+            //   ThermalStorageValue = values.thermalStorage;
+            // }
+            if (values.thermalStorage === "1") {
+              setSomeSharedState("thermalStorageState", 90);
             }
-        </FormSpy >)
+            if (values.thermalStorage === "2") {
+              setSomeSharedState("thermalStorageState", 60);
+            }
+            handleThermalStorageChange(value);
+          }}
+        </OnChange>
+      </BasicContainerThing>
+    </>
+  );
 };
-
 
 export default TestThermalStorageMenu;

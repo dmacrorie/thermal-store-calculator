@@ -1,10 +1,15 @@
 import { FormSpy } from "react-final-form";
+import { ISharedState } from "./App";
 import { IThermalForm } from "./interfaces/thermal";
 import ContainerThing from './util/container';
 import InfoThing from "./util/infoThing";
 import NumberField from "./util/numberField";
 
-const ThermalFormFields = () => {
+export interface ITestFormProps {
+    sharedState:ISharedState
+}
+
+const ThermalFormFields: React.FC<ITestFormProps> = ({ sharedState }:ITestFormProps ) => {
     return <FormSpy <IThermalForm>
         subscription={{
             values: true,
@@ -16,7 +21,7 @@ const ThermalFormFields = () => {
 
             <NumberField xs={4} sm={4} md={4} name="tankSpecificHeatCapacity" label="Store specific heat capacity" longText="Water is 4181 J/kg/&#8451;, Aluminium is 897 J/kg/&#8451; more at www.engineeringtoolbox.com/specific-heat-capacity-d_391.html" helpText="(J/kg/&#8451;)" type="int" />
 
-            <InfoThing xs={4} sm={4} md={4} textA={`Store Mass`} textB="kg" value={(values.tankMassOverride ? values.tankMassOverride : values.tankMass)} valueDecimalPlace={0} resetFunction={e => {
+            <InfoThing xs={4} sm={4} md={4} textA={`Store Mass`} textB="kg" value={(sharedState.tankMassState ? sharedState.tankMassState : values.tankMass)} valueDecimalPlace={0} resetFunction={e => {
                 form.change('tankMassOverride', undefined)
             }}>
                 <NumberField name="tankMassOverride" xs={12} sm={12} md={12} label="Store Mass Override" longText="If you have a fixed storage size then enter it here." helpText="(J/kg/&#8451;)" type="int" />

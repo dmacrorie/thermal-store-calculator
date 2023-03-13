@@ -1,45 +1,109 @@
 import { Field } from "react-final-form";
+import { OnChange } from "react-final-form-listeners";
+import { ISharedState } from "../App";
 import BasicContainerThing from "../util/basicContainer";
-import RadioInput from "./RadioInput";
 
+export interface ITestHouseFormProps {
+  setSomeSharedState(field: keyof ISharedState, val: number): void;
+  values: any;
+}
 
-const TestSeasonalWeightings = () => {
+interface IConditionProps {
+  when: string;
+  is: any;
+  children: React.ReactNode;
+}
+
+const Condition: React.FC<IConditionProps> = ({ when, is, children }) => (
+  <Field name={when} subscription={{ value: true }}>
+    {({ input: { value } }) => (value === is ? children : null)}
+  </Field>
+);
+
+const TestSeasonalWeightings: React.FC<ITestHouseFormProps> = ({
+  setSomeSharedState,
+  values,
+}: ITestHouseFormProps) => {
+
+  //clears the value entered in the input box when corresponding radio button is not selected
+  const handleSeasonalWeightingChange = (value: string) => {
+    if (value !== '4') {
+      values.seasonalWeightingInput = '';
+    }
+  }
 
   return (
     <BasicContainerThing title="Please select from the following seasonal weightings:">
       <div>
-              <label>
-                <Field<string>
-                  name="seasonalWeighting"
-                  component={RadioInput}
-                  type="radio"
-                  value="1000"
-                />{" "}
-                SCOP values (averaged over year of space heating - add an explainer
-                that this weighted towards higher heating usage in winter)
-              </label><br/>
+        <label>
+          <Field
+            name="seasonalWeighting"
+            component="input"
+            type="radio"
+            value="200"
+          />{" "}
+          SCOP values (averaged over year of space heating - add an explainer
+          that this weighted towards higher heating usage in winter)
+        </label>
+        <br></br>
 
-              <label>
-                <Field<string>
-                  name="seasonalWeighting"
-                  component={RadioInput}
-                  type="radio"
-                  value="1500"
-                />{" "}
-                COP-Winter (winter months December-February)
-              </label><br/>
+        <label>
+          <Field
+            name="seasonalWeighting"
+            component="input"
+            type="radio"
+            value="220"
+          />{" "}
+          COP-Winter (winter months December-February)
+        </label>
+        <br />
 
-              <label>
-                <Field<string>
-                  name="seasonalWeighting"
-                  component={RadioInput}
-                  type="radio"
-                  value="1750"
-                />{" "}
-                COP-Average (Average of OEM quoted values)
-              </label><br/>
+        <label>
+          <Field<string>
+            name="seasonalWeighting"
+            component="input"
+            type="radio"
+            value="240"
+          />{" "}
+          COP-Average (Average of OEM quoted values)
+        </label>
+        <br />
+        
+        <label>
+          <Field
+            name="seasonalWeighting"
+            component="input"
+            type="radio"
+            value="4"
+          />
+          Enter your own SCOP value:{" "}
+        </label>
+        <Condition when="seasonalWeighting" is="4">
+          <Field name="seasonalWeightingInput" component="input" type="text" initialValue=''/>
+          <OnChange name="seasonalWeightingInput">
+            {(value: string, previous: string) => {
+              setSomeSharedState(
+                "seasonalWeightingState",
+                values.seasonalWeightingInput
+              );
+            }}
+          </OnChange>
+        </Condition>
 
-          </div>
+      </div>
+      <OnChange name="seasonalWeighting">
+        {(value: string, previous: string) => {
+          let seasonalWeightingValue = 0;
+          if (values.seasonalWeighting < 3) {
+            seasonalWeightingValue = values.seasonalWeighting;
+          } 
+          setSomeSharedState(
+            "seasonalWeightingState",
+            values.seasonalWeighting
+          );
+          handleSeasonalWeightingChange(value);
+        }}
+      </OnChange>
     </BasicContainerThing>
   );
 };

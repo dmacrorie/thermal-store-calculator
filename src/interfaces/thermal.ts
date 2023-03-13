@@ -47,5 +47,8 @@ export interface IThermalForm {
     thermalStorageVsHeatPumpPeakRate: number;
     thermalStoragePotentialWastedExpense: number;
     thermalStorageHighTempRateCost: number;
+
+    heatingType?: string;
+    houseType?: any,
 }
 
