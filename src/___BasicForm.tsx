@@ -53,6 +53,7 @@ const BasicForm:React.FC<IBasicFormProps> = (props) => {
                     <form onSubmit={handleSubmit} autoComplete="off" noValidate>
                         {/* <DebugButton data={values} /> */}
                         <Grid container spacing={2}>
+                        <pre>{JSON.stringify(selectThermalStorage)}</pre>
                             <Grid item xs={8} sm={9} md={9} >
                                 <HouseMenu 
                                   selectHouse={selectHouse}

@@ -32,6 +32,10 @@ const TestSeasonalWeightings: React.FC<ITestHouseFormProps> = ({
     }
   }
 
+  const handleSeasonalWeightingInputChange = (value: number, previous: string) => {
+    setSomeSharedState("seasonalWeightingState", value);
+  };
+
   return (
     <BasicContainerThing title="Please select from the following seasonal weightings:">
       <div>
@@ -79,15 +83,12 @@ const TestSeasonalWeightings: React.FC<ITestHouseFormProps> = ({
           Enter your own SCOP value:{" "}
         </label>
         <Condition when="seasonalWeighting" is="4">
-          <Field name="seasonalWeightingInput" component="input" type="text" initialValue=''/>
-          <OnChange name="seasonalWeightingInput">
-            {(value: string, previous: string) => {
-              setSomeSharedState(
-                "seasonalWeightingState",
-                values.seasonalWeightingInput
-              );
-            }}
-          </OnChange>
+          <Field 
+            name="seasonalWeightingInput" 
+            component="input" 
+            type="text" 
+            initialValue='' 
+            onChange={handleSeasonalWeightingInputChange}/>
         </Condition>
 
       </div>

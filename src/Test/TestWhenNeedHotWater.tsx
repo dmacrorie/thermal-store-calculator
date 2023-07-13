@@ -18,10 +18,10 @@ const TestWhenNeedHotWater: React.FC<ITestHouseFormProps> = ({
       <BasicContainerThing title="Select when you need hot water:">
         <Field<string> name="hotWaterTime" component={SelectInput}>
           <option />
-          <option value="5">Morning</option>
-          <option value="6">Early evening</option>
-          <option value="7">Late evening</option>
-          <option value="8">Random</option>
+          <option value="0">Morning</option>
+          <option value="1">Early evening</option>
+          <option value="2">Late evening</option>
+          <option value="3">Random</option>
         </Field>
         <OnChange name="hotWaterTime">
           {(value: string, previous: string) => {

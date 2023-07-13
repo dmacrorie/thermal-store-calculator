@@ -37,6 +37,7 @@ const TestForm:React.FC<ITestFormProps> = ({ visible, setSomeSharedState, shared
                     return <form onSubmit={handleSubmit} autoComplete="off" noValidate>
                         <Grid container spacing={2}>
                             <Grid item xs={8} sm={9} md={9} >
+                                <pre>{sharedState.heatingTypeState}</pre>
                                 <TestHouseMenu setSomeSharedState={setSomeSharedState} />
                                 <TestSelectHeatingType setSomeSharedState={setSomeSharedState} values={values}/>
                                 {(values.heatingType === "1" || values.heatingType === "2") && <TestWhenNeedHotWater setSomeSharedState={setSomeSharedState} values={values}/>}

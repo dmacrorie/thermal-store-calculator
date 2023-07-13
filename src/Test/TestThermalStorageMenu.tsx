@@ -2,6 +2,7 @@ import { Field } from "react-final-form";
 import BasicContainerThing from "../util/basicContainer";
 import { OnChange } from "react-final-form-listeners";
 import { ISharedState } from "../App";
+import { useEffect } from "react";
 
 export interface ITestHouseFormProps {
   setSomeSharedState(field: keyof ISharedState, val: number): void;
@@ -24,17 +25,17 @@ const TestThermalStorageMenu: React.FC<ITestHouseFormProps> = ({
   setSomeSharedState,
   values,
 }: ITestHouseFormProps) => {
+    
+    const handleThermalStorageChange = (value: string) => {
+      if (value !== "3") {
+        values.numberValue3 = "";
+      }
+      if (value !== "4") {
+        values.numberValue4 = "";
+      }
+    };
 
-  const handleThermalStorageChange = (value: string) => {
-    if (value !== "3") {
-      values.numberValue3 = "";
-    }
-    if (value !== "4") {
-      values.numberValue4 = "";
-    }
-  };
-
-  return (
+    return (
     <>
       <BasicContainerThing title="Thermal store parameters:">
         <div>
@@ -62,7 +63,7 @@ const TestThermalStorageMenu: React.FC<ITestHouseFormProps> = ({
           </label>
           <br></br>
 
-          <label>
+          {/* <label>
             <Field
               name="thermalStorage"
               component="input"
@@ -79,12 +80,12 @@ const TestThermalStorageMenu: React.FC<ITestHouseFormProps> = ({
               placeholer="3"
             />
             <OnChange name="numberValue3">
-              {(value: string, previous: string) => {
-                setSomeSharedState("tankMassState", values.numberValue3);
+              {(value: number, previous: string) => {
+                setSomeSharedState("tankMassState", value);
               }}
             </OnChange>
           </Condition>
-          <br></br>
+          <br></br> */}
 
           <label>
             <Field
@@ -98,8 +99,8 @@ const TestThermalStorageMenu: React.FC<ITestHouseFormProps> = ({
           <Condition when="thermalStorage" is="4">
             <Field name="numberValue4" component="input" type="text" />
             <OnChange name="numberValue4">
-              {(value: string, previous: string) => {
-                setSomeSharedState("thermalStorageState", values.numberValue4);
+              {(value: number, previous: string) => {
+                setSomeSharedState("thermalStorageState", value);
               }}
             </OnChange>
           </Condition>
@@ -107,14 +108,10 @@ const TestThermalStorageMenu: React.FC<ITestHouseFormProps> = ({
 
         <OnChange name="thermalStorage">
           {(value: string, previous: string) => {
-            // let ThermalStorageValue = 0;
-            // if (values.thermalStorage < 3) {
-            //   ThermalStorageValue = values.thermalStorage;
-            // }
-            if (values.thermalStorage === "1") {
+            if (value === "1") {
               setSomeSharedState("thermalStorageState", 90);
             }
-            if (values.thermalStorage === "2") {
+            if (value === "2") {
               setSomeSharedState("thermalStorageState", 60);
             }
             handleThermalStorageChange(value);

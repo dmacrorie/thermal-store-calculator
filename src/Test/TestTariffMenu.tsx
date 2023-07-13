@@ -24,10 +24,10 @@ return (
               <option value="5">Octopus Agile</option>
             </Field>
             <OnChange name="tariffMenu">
-          {(value:string, previous:string) => {
-          setSomeSharedState("tariffMenuState", values.tariffMenu)
-          }}
-          </OnChange>
+              {(value:string, previous:string) => {
+              setSomeSharedState("tariffMenuState", values.tariffMenu)
+              }}
+            </OnChange>
         </BasicContainerThing>
         
     </>

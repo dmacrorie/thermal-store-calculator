@@ -21,12 +21,15 @@ const ThermalFormFields: React.FC<ITestFormProps> = ({ sharedState }:ITestFormPr
 
             <NumberField xs={4} sm={4} md={4} name="tankSpecificHeatCapacity" label="Store specific heat capacity" longText="Water is 4181 J/kg/&#8451;, Aluminium is 897 J/kg/&#8451; more at www.engineeringtoolbox.com/specific-heat-capacity-d_391.html" helpText="(J/kg/&#8451;)" type="int" />
 
-            <InfoThing xs={4} sm={4} md={4} textA={`Store Mass`} textB="kg" value={(sharedState.tankMassState ? sharedState.tankMassState : values.tankMass)} valueDecimalPlace={0} resetFunction={e => {
+            {/* <InfoThing xs={4} sm={4} md={4} textA={`Store Mass`} textB="kg" value={(sharedState.tankMassState ? sharedState.tankMassState : values.tankMass)} valueDecimalPlace={0} resetFunction={e => {
                 form.change('tankMassOverride', undefined)
             }}>
                 <NumberField name="tankMassOverride" xs={12} sm={12} md={12} label="Store Mass Override" longText="If you have a fixed storage size then enter it here." helpText="(J/kg/&#8451;)" type="int" />
 
-            </InfoThing>
+            </InfoThing> */}
+
+            <NumberField name="tankMass" xs={4} sm={4} md={4} label="Store mass" longText="Store mass" helpText="kg" type="int" />
+
             <NumberField name="tankMaxTemperature" xs={4} sm={4} md={4} label="Maximum temp." longText="The temperature the store will be heated to during the low cost period." helpText="&#8451;" type="int" />
             <NumberField name="tankMinUsefulTemperature" xs={4} sm={4} md={4} label="Min. useful temp." longText="The lowest temperature of the store that provides useful heat to the" helpText="&#8451;" type="int" />
             <NumberField name="tankAmbientTemperature" xs={4} sm={4} md={4} label="Ambient temperature" longText="Temperature surrounding the storage." helpText="&#8451;" type="int" />

@@ -45,7 +45,7 @@ const TestPieCharts = createDecorator(
 
                 const values: IThermalForm = unbind;
 
-            if (values.timeEnergyLostFinalfterN !== sharedState.timeEnergyLostFinalfterNState) {
+        if (values.timeEnergyLostFinalfterN !== sharedState.timeEnergyLostFinalfterNState) {
                 setSomeSharedState('timeEnergyLostFinalfterNState', values.timeEnergyLostFinalfterN)
             }
         if (values.timeShiftHoursN !== sharedState.timeShiftHoursNState) {

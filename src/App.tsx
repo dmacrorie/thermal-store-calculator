@@ -49,6 +49,7 @@ export interface ISharedState {
   thermalStorageVsHeatPumpPeakRateState: any;
   thermalStoragePotentialWastedExpenseState: any;
   thermalStorageHighTempRateCostState: any;
+  heatDailyEnergyRequiredOverride: number;
 }
 
 export enum Fieldname {
@@ -99,7 +100,8 @@ function App() {
     thermalStorageVsGridPercentState: 0,
     thermalStorageVsHeatPumpPeakRateState: 0,
     thermalStoragePotentialWastedExpenseState: 0,
-    thermalStorageHighTempRateCostState: 0
+    thermalStorageHighTempRateCostState: 0,
+    heatDailyEnergyRequiredOverride: 0,
   });
 
   const handleChange = (fieldName:Fieldname, value:number)=>{
